@@ -9,6 +9,6 @@ func Init() {
 	//TODO: Initialize LEDs, Sensors, GPIOs
 }
 
-func ReadIMU() {
-	// hal.UvRead()
+func ReadUV() float32 {
+	return hal.ReadUV()
 }

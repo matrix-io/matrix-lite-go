@@ -5,9 +5,6 @@
 extern "C"{
     #include "sensors.h"
 }
-
-
-
 matrix_hal::UVData uv_data;
 matrix_hal::UVSensor uv_sensor;
 
@@ -15,7 +12,7 @@ void uv_init(){
     uv_sensor.Setup(&bus);
 }
 
-uv_values uvRead(){
+uv_values uv_read(){
     struct uv_values data;
 
     // Update output values
