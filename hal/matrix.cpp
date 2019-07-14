@@ -1,19 +1,17 @@
+#include <stdexcept>
+#include "matrix_hal/matrixio_bus.h"
 extern "C" {
     #include "matrix.h"
 }
+#include "bus.hpp"
 
-#include "matrix_hal/matrixio_bus.h"
-
-// #include "drivers/everloop.h"
-// #include "drivers/gpio.h"
-// #include "drivers/info.h"
-// #include "drivers/sensors/sensors.h"
 
 // Initialize bus for MATRIX hardware communication
 matrix_hal::MatrixIOBus bus;
 
-
-    bool busInit(){
-        return bus.Init();  
-        // return true;
-    }
+bool busInit(){
+    if (bus.Init())
+        return true;
+    
+    return false;
+}
