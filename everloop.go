@@ -31,10 +31,9 @@ type CLed struct {
 func ledSet(leds []CLed) {
 	pointer := unsafe.Pointer(&leds[0])
 	C.everloop_set((*C.Led)(pointer))
-	// C.everloop_set(leds)
 }
 
-// DELETE THIS LATER JUST FOR TESTING
+// TODO DELETE THIS LATER JUST FOR TESTING
 func TestLed() {
 	leds := []CLed{}
 	for i := 0; i < LedCount(); i++ {
