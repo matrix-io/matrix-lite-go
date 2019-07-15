@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "matrix_hal/matrixio_bus.h"
 extern "C" {
-    #include "matrix.h"
+    #include "bus.h"
 }
 #include "bus.hpp"
 

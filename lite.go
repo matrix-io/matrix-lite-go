@@ -1,14 +1,32 @@
 package lite
 
+/*
+#cgo CXXFLAGS: -std=c++11
+#cgo LDFLAGS:  -lmatrix_creator_hal
+#include "bus.h"
+#include "sensors.h"
+*/
 import (
-	"github.com/Hermitter/matrix-lite-go/hal"
+	"C"
 )
 
-func Init() {
-	hal.BusInit()
-	//TODO: Initialize LEDs, Sensors, GPIOs
-}
+import (
+	"log"
+)
 
-func ReadUV() float32 {
-	return hal.ReadUV()
+// Init will start the MATRIXIOBus and exit the program if it can't.
+// Every HAL function relies on the bus.
+func Init() {
+	if bool(!C.busInit()) {
+		log.Fatal("matrixio_bus not initialized!\nIs MATRIX HAL installed?")
+	}
+
+	// Initialize Sensors
+	C.uv_init()
+	C.imu_init()
+	C.humidity_init()
+	C.pressure_init()
+
+	// Initialize Everloop
+	// Initialize GPIO
 }

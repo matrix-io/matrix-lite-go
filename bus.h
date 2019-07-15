@@ -1,5 +1,5 @@
-#ifndef MATRIX_H
-#define MATRIX_H
+#ifndef BUS_H
+#define BUS_H
 
 #include <stdbool.h>
 
