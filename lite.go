@@ -14,7 +14,7 @@ import (
 	"log"
 )
 
-// Init will start the MATRIXIOBus and exit the program if it can't.
+// Init starts the MATRIXIOBus and exit the program if it can't.
 // Every HAL function relies on the bus.
 func Init() {
 	if bool(!C.busInit()) {

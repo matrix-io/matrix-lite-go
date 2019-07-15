@@ -4,30 +4,79 @@ package lite
 import (
 	"C"
 )
-import "fmt"
 
-//TODO: prase read_sensor functions into structs
-
-// ReadIMU read MATRIX Creator IMU data
-type imu struct {
+// ImuValues contains IMU sensor values
+type ImuValues struct {
+	AccelX float32
+	AccelY float32
+	AccelZ float32
+	GyroX  float32
+	GyroY  float32
+	GyroZ  float32
+	Yaw    float32
+	Pitch  float32
+	Roll   float32
+	MagX   float32
+	MagY   float32
+	MagZ   float32
 }
 
-func ReadIMU() {
-	fmt.Println(C.imu_read())
+// ReadIMU read MATRIX Creator IMU data
+func ReadIMU() ImuValues {
+	return ImuValues{
+		AccelX: float32(C.imu_read().accel_x),
+		AccelY: float32(C.imu_read().accel_y),
+		AccelZ: float32(C.imu_read().accel_z),
+		GyroX:  float32(C.imu_read().gyro_x),
+		GyroY:  float32(C.imu_read().gyro_y),
+		GyroZ:  float32(C.imu_read().gyro_z),
+		Yaw:    float32(C.imu_read().yaw),
+		Pitch:  float32(C.imu_read().pitch),
+		Roll:   float32(C.imu_read().roll),
+		MagX:   float32(C.imu_read().mag_x),
+		MagY:   float32(C.imu_read().mag_y),
+		MagZ:   float32(C.imu_read().mag_z),
+	}
+}
+
+// UvValues contains UV sensor values
+type UvValues struct {
+	UV float32
 }
 
 // ReadUV read MATRIX Creator UV data
-func ReadUV() {
-	fmt.Println(C.uv_read())
-	// return float32(C.uv_read().uv)
+func ReadUV() UvValues {
+	return UvValues{
+		UV: float32(C.uv_read().uv),
+	}
 }
 
-// ReadHumidity read MATRIX Creator UV data
-func ReadHumidity() {
-	fmt.Println(C.humidity_read())
+// HumidityValues contains Humidity sensor values
+type HumidityValues struct {
+	Humidity    float32
+	Temperature float32
+}
+
+// ReadHumidity read MATRIX Creator Humidity data
+func ReadHumidity() HumidityValues {
+	return HumidityValues{
+		Humidity:    float32(C.humidity_read().humidity),
+		Temperature: float32(C.humidity_read().temperature),
+	}
+}
+
+// PressureValues contains Pressure sensor values
+type PressureValues struct {
+	Altitude    float32
+	Pressure    float32
+	Temperature float32
 }
 
 // ReadPressure read MATRIX Creator UV data
-func ReadPressure() {
-	fmt.Println(C.pressure_read())
+func ReadPressure() PressureValues {
+	return PressureValues{
+		Altitude:    float32(C.pressure_read().altitude),
+		Pressure:    float32(C.pressure_read().pressure),
+		Temperature: float32(C.pressure_read().temperature),
+	}
 }
