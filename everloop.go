@@ -27,16 +27,17 @@ type CLed struct {
 	Led C.Led
 }
 
+// Pass led slice pointer to HAL
 func ledSet(leds []CLed) {
-	ledsPointer := unsafe.Pointer(&leds[0])
-	C.everloop_set((*C.Led)(ledsPointer))
+	pointer := unsafe.Pointer(&leds[0])
+	C.everloop_set((*C.Led)(pointer))
 	// C.everloop_set(leds)
 }
 
 // DELETE THIS LATER JUST FOR TESTING
 func TestLed() {
 	leds := []CLed{}
-	for i := 0; i < LedCount()-1; i++ {
+	for i := 0; i < LedCount(); i++ {
 		leds = append(leds, CLed{Led: C.Led{
 			r: 0,
 			g: 0,

@@ -16,13 +16,12 @@ void everloop_init(){
     everloopLength = bus.MatrixLeds();
 }
 
-// TODO REMOVE HARDCODED LED COUNT!!!!!!
 // set LEDS on MATRIX device
-void everloop_set(Led led[35]){
+void everloop_set(Led led[]){
 
     // Create everloop image
-    matrix_hal::EverloopImage everloop_image(35);
-    for (int i = 0; i < 35; i++){
+    matrix_hal::EverloopImage everloop_image(everloopLength);
+    for (int i = 0; i < everloopLength; i++){
         everloop_image.leds[i].red = led[i].r;
         everloop_image.leds[i].green = led[i].g;
         everloop_image.leds[i].blue = led[i].b;

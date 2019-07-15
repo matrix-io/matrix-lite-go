@@ -12,6 +12,6 @@ typedef struct Led{
 int everloopLength;
 
 // void newLed(led);
-void everloop_set(Led led[35]);
+void everloop_set(Led led[]);
 
 #endif
