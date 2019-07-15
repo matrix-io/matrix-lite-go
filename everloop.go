@@ -6,45 +6,47 @@ import (
 )
 
 import (
-	"fmt"
 	"unsafe"
 )
+
+// Led represents the RGBW value of an LED (0-255)
+type Led struct {
+	R, G, B, W uint8
+}
+
+// Led config that's passed to C
+type cLed struct {
+	Led C.Led
+}
 
 // LedCount returns the number of LEDs on your MATRIX device
 func LedCount() int {
 	return int(C.everloopLength)
 }
 
-// type Led struct{
-// 	r uint8
-// 	g uint8
-// 	b uint8
-// 	w uint8
-// }
-
-// CLed represents an LED color value for C++
-type CLed struct {
-	Led C.Led
-}
-
-// Pass led slice pointer to HAL
-func ledSet(leds []CLed) {
+// Pass led slice to C
+func cLedSet(leds []cLed) {
 	pointer := unsafe.Pointer(&leds[0])
 	C.everloop_set((*C.Led)(pointer))
 }
 
-// TODO DELETE THIS LATER JUST FOR TESTING
-func TestLed() {
-	leds := []CLed{}
+// LedSet individually sets each MATRIX LED based on array index
+func LedSet(led []Led){
+	//TODO
+}
+
+// LedSetAll sets all MATRIX LEDs to one value
+func LedSetAll(led Led){
+	everloop := []cLed{}
+
 	for i := 0; i < LedCount(); i++ {
-		leds = append(leds, CLed{Led: C.Led{
-			r: 0,
-			g: 0,
-			b: 0,
-			w: 0,
+		everloop = append(everloop, cLed{Led: C.Led{
+			r: C.int(led.R),
+			g: C.int(led.G),
+			b: C.int(led.B),
+			w: C.int(led.W),
 		}})
 	}
 
-	ledSet(leds)
-	fmt.Println(leds)
+	cLedSet(everloop)
 }

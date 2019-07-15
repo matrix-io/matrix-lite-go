@@ -7,18 +7,10 @@ import (
 
 // ImuValues contains IMU sensor values
 type ImuValues struct {
-	AccelX float32
-	AccelY float32
-	AccelZ float32
-	GyroX  float32
-	GyroY  float32
-	GyroZ  float32
-	Yaw    float32
-	Pitch  float32
-	Roll   float32
-	MagX   float32
-	MagY   float32
-	MagZ   float32
+	AccelX, AccelY, AccelZ float32
+	GyroX, GyroY, GyroZ    float32
+	Yaw, Pitch, Roll       float32
+	MagX, MagY, MagZ       float32
 }
 
 // ReadIMU read MATRIX Creator IMU data
