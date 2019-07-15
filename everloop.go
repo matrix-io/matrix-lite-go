@@ -22,7 +22,7 @@ func LedCount() int {
 // 	w uint8
 // }
 
-// CLed represents an LED color value
+// CLed represents an LED color value for C++
 type CLed struct {
 	Led C.Led
 }
