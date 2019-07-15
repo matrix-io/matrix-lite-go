@@ -6,18 +6,10 @@
 void imu_init();
 
 struct imu_values {
-    float accel_x;
-    float accel_y;
-    float accel_z;
-    float gyro_x;
-    float gyro_y;
-    float gyro_z;
-    float yaw;
-    float pitch;
-    float roll;
-    float mag_x;
-    float mag_y;
-    float mag_z;
+    float accel_x, accel_y, accel_z;
+    float gyro_x,  gyro_y,  gyro_z;
+    float yaw,     pitch,   roll;
+    float mag_x,   mag_y,   mag_z;
 };
 struct imu_values imu_read();
 
