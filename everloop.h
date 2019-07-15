@@ -4,7 +4,7 @@
 void everloop_init();
 
 // Create LED configurations
-typedef struct Led{
+typedef struct{
     int r, g, b, w;
 } Led;
 
