@@ -38,16 +38,21 @@ go mod init myapp
 
 ## 4. Install matrix-lite-go
 ```
-go get https://github.com/matrix-io/matrix-lite-go
+go get github.com/matrix-io/matrix-lite-go
 ```
 
 # Usage (may change in the future)
 
 ## Sensors
 ```go
-    import matrix "github.com/matrix-io/matrix-lite-go"
+    package main
+    import (
+        matrix "github.com/matrix-io/matrix-lite-go"
+        "fmt"
+    )
     
     func main(){
+        matrix.Init()
         fmt.Println( matrix.ReadIMU() )
         fmt.Println( matrix.ReadUV() )
         fmt.Println( matrix.ReadHumidity() )
