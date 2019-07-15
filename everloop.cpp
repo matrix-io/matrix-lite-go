@@ -22,9 +22,9 @@ void everloop_set(Led led[]){
     // Create everloop image
     matrix_hal::EverloopImage everloop_image(everloopLength);
     for (int i = 0; i < everloopLength; i++){
-        everloop_image.leds[i].red = led[i].r;
+        everloop_image.leds[i].red   = led[i].r;
         everloop_image.leds[i].green = led[i].g;
-        everloop_image.leds[i].blue = led[i].b;
+        everloop_image.leds[i].blue  = led[i].b;
         everloop_image.leds[i].white = led[i].w;
     }
 
