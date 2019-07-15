@@ -1,4 +1,7 @@
 # MATRIX-Lite-Go
+[![GoDoc](https://godoc.org/github.com/Hermitter/fileman?status.svg)](https://godoc.org/github.com/matrix-io/matrix-lite-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/matrix-io/matrix-lite-go)](https://goreportcard.com/report/github.com/matrix-io/matrix-lite-go)
+
 MATRIX Lite go is a Golang library that allows users of varying skill levels to easily program their MATRIX Device.
 
 # Roadmap
@@ -21,7 +24,7 @@ Ensure you have a Raspberry Pi, attached with a MATRIX device, that's flashed wi
 https://matrix-io.github.io/matrix-documentation/matrix-hal/getting-started/installation-package/
 
 ## 2. Install Golang & Create A Project
-**Download the latest version of Golang
+**Download the latest version of Golang**
 ```bash
 sudo apt install golang
 ```
