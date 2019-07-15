@@ -1,3 +1,3 @@
-module github.com/Hermitter/matrix-lite-go
+module github.com/matrix-io/matrix-lite-go
 
 go 1.12
