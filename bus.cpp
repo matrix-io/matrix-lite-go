@@ -1,4 +1,3 @@
-#include <stdexcept>
 #include "matrix_hal/matrixio_bus.h"
 extern "C" {
     #include "bus.h"
