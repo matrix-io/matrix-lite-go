@@ -21,11 +21,10 @@ void imu_init(){
     imu_sensor.Setup(&bus);
 }
 
-// get sensor values
+// get the latest IMU values
 imu_values imu_read(){
-    struct imu_values data;
+    imu_values data;
 
-    // get latest values
     imu_sensor.Read(&imu_data);
     data.accel_x = imu_data.accel_x;
     data.accel_y = imu_data.accel_y;
@@ -53,11 +52,10 @@ void uv_init(){
     uv_sensor.Setup(&bus);
 }
 
-// get sensor values
+// get the latest UV values
 uv_values uv_read(){
-    struct uv_values data;
+    uv_values data;
 
-    // get latest values
     uv_sensor.Read(&uv_data);
     data.uv = uv_data.uv;
 
@@ -74,11 +72,10 @@ void humidity_init(){
     humidity_sensor.Setup(&bus);
 }
 
-// get sensor values
+// get the latest Humidity values
 humidity_values humidity_read(){
-    struct humidity_values data;
+    humidity_values data;
 
-    // get latest values
     humidity_sensor.Read(&humidity_data);
     data.humidity = humidity_data.humidity;
     data.temperature = humidity_data.temperature;
@@ -96,11 +93,10 @@ void pressure_init(){
     pressure_sensor.Setup(&bus);
 }
 
-// get sensor values
+// get the latest Pressure values
 pressure_values pressure_read(){
-    struct pressure_values data;
-
-    // get latest values
+    pressure_values data;
+    
     pressure_sensor.Read(&pressure_data);
     data.altitude = pressure_data.altitude;
     data.pressure = pressure_data.pressure;

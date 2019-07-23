@@ -15,19 +15,20 @@ type ImuValues struct {
 
 // ReadIMU read MATRIX Creator IMU data
 func ReadIMU() ImuValues {
+	var values C.imu_values = C.imu_read()
 	return ImuValues{
-		AccelX: float32(C.imu_read().accel_x),
-		AccelY: float32(C.imu_read().accel_y),
-		AccelZ: float32(C.imu_read().accel_z),
-		GyroX:  float32(C.imu_read().gyro_x),
-		GyroY:  float32(C.imu_read().gyro_y),
-		GyroZ:  float32(C.imu_read().gyro_z),
-		Yaw:    float32(C.imu_read().yaw),
-		Pitch:  float32(C.imu_read().pitch),
-		Roll:   float32(C.imu_read().roll),
-		MagX:   float32(C.imu_read().mag_x),
-		MagY:   float32(C.imu_read().mag_y),
-		MagZ:   float32(C.imu_read().mag_z),
+		AccelX: float32(values.accel_x),
+		AccelY: float32(values.accel_y),
+		AccelZ: float32(values.accel_z),
+		GyroX:  float32(values.gyro_x),
+		GyroY:  float32(values.gyro_y),
+		GyroZ:  float32(values.gyro_z),
+		Yaw:    float32(values.yaw),
+		Pitch:  float32(values.pitch),
+		Roll:   float32(values.roll),
+		MagX:   float32(values.mag_x),
+		MagY:   float32(values.mag_y),
+		MagZ:   float32(values.mag_z),
 	}
 }
 
@@ -38,8 +39,9 @@ type UvValues struct {
 
 // ReadUV read MATRIX Creator UV data
 func ReadUV() UvValues {
+	var values C.uv_values = C.uv_read()
 	return UvValues{
-		UV: float32(C.uv_read().uv),
+		UV: float32(values.uv),
 	}
 }
 
@@ -51,9 +53,10 @@ type HumidityValues struct {
 
 // ReadHumidity read MATRIX Creator Humidity data
 func ReadHumidity() HumidityValues {
+	var values C.humidity_values = C.humidity_read()
 	return HumidityValues{
-		Humidity:    float32(C.humidity_read().humidity),
-		Temperature: float32(C.humidity_read().temperature),
+		Humidity:    float32(values.humidity),
+		Temperature: float32(values.temperature),
 	}
 }
 
@@ -66,9 +69,10 @@ type PressureValues struct {
 
 // ReadPressure read MATRIX Creator UV data
 func ReadPressure() PressureValues {
+	var values C.pressure_values = C.pressure_read()
 	return PressureValues{
-		Altitude:    float32(C.pressure_read().altitude),
-		Pressure:    float32(C.pressure_read().pressure),
-		Temperature: float32(C.pressure_read().temperature),
+		Altitude:    float32(values.altitude),
+		Pressure:    float32(values.pressure),
+		Temperature: float32(values.temperature),
 	}
 }
