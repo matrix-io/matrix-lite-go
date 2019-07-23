@@ -1,4 +1,4 @@
-package lite
+package matrix
 
 /*
 #cgo CXXFLAGS: -std=c++11

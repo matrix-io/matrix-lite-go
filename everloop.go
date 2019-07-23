@@ -1,4 +1,4 @@
-package lite
+package matrix
 
 //#include "everloop.h"
 import (
