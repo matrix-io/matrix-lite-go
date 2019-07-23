@@ -5,12 +5,12 @@ void everloop_init();
 
 typedef struct{
     int r, g, b, w;
-} Led;
+} led;
 
 // number of LEDs on device
 int everloopLength;
 
 // render LEDS colors on MATRIX device
-void everloop_set(Led led[]);
+void everloop_set(led leds[]);
 
 #endif

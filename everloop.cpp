@@ -17,17 +17,17 @@ void everloop_init(){
 }
 
 // set LEDS on MATRIX device
-void everloop_set(Led led[]){
+void everloop_set(led leds[]){
 
-    // Create everloop image
+    // create everloop image
     matrix_hal::EverloopImage everloop_image(everloopLength);
     for (int i = 0; i < everloopLength; i++){
-        everloop_image.leds[i].red   = led[i].r;
-        everloop_image.leds[i].green = led[i].g;
-        everloop_image.leds[i].blue  = led[i].b;
-        everloop_image.leds[i].white = led[i].w;
+        everloop_image.leds[i].red   = leds[i].r;
+        everloop_image.leds[i].green = leds[i].g;
+        everloop_image.leds[i].blue  = leds[i].b;
+        everloop_image.leds[i].white = leds[i].w;
     }
 
-    // Render everloop image
+    // render everloop image
     hal_everloop.Write(&everloop_image);
 }
