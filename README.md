@@ -53,8 +53,8 @@ go get github.com/matrix-io/matrix-lite-go
     
     func main(){
         matrix.Init()
-        fmt.Println( matrix.ReadIMU() )
-        fmt.Println( matrix.ReadUV() )
+        fmt.Println( matrix.ReadImu() )
+        fmt.Println( matrix.ReadUv() )
         fmt.Println( matrix.ReadHumidity() )
         fmt.Println( matrix.ReadPressure() )
     }
