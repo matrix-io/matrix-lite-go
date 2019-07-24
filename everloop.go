@@ -36,6 +36,11 @@ func (l Led) toCLed() C.led {
 	}
 }
 
+// TODO implement
+func stringToCLed(string) C.led {
+	return C.led{}
+}
+
 // LedSet individually sets each MATRIX LED based on array index
 func LedSet(color interface{}) {
 	// Hold and then set LED values
@@ -45,23 +50,14 @@ func LedSet(color interface{}) {
 	// Determine how to set LEDs
 	switch input := reflect.TypeOf(color); {
 
-	// Set all LEDs to an Led struct
+	// Assign Led{} colors to each LED
 	case input == reflect.TypeOf(Led{}):
 		for i := 0; i < LedLength(); i++ {
 			everloop[i] = color.(Led).toCLed()
 		}
 
 	case input.Kind() == reflect.String:
-		// for i := 0; i < LedLength(); i++ {
-		// 	everloop[i] = C.led{
-		// 		r: C.int(1),
-		// 		g: C.int(0),
-		// 		b: C.int(0),
-		// 		w: C.int(0),
-		// 	}
-		// }
 		fmt.Println("YOU GAVE A STRING")
-
 	case input.Kind() == reflect.Array:
 		fmt.Println("YOU GAVE AN ARRAY")
 	case input.Kind() == reflect.Slice:
