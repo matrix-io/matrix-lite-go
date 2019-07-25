@@ -56,22 +56,36 @@ func stringToCLed(color string) C.led {
 	}
 }
 
-func anythingToCLed(input interface{}) C.led {
+func anythingToCLed(color interface{}) C.led {
+	// Determine how to set LED colors
 	switch input := reflect.TypeOf(color); {
 
-	case input == reflect.TypeOf(Led{}):
-		return color.(Led).toCLed()
-
+	//* Use string for all
 	case input.Kind() == reflect.String:
 		return stringToCLed(color.(string))
+		fmt.Println("you used string")
+
+	//* Use Led{} for all
+	case input == reflect.TypeOf(Led{}):
+		return color.(Led).toCLed()
+		fmt.Println("you used struct Led")
+
+	default:
+		fmt.Print("UNEXPECTED INPUT: ")
+		fmt.Println(reflect.TypeOf(color).Kind())
 	}
+
+	return C.led{}
 }
 
 // LedSet individually sets each MATRIX LED based on array index
 func LedSet(color interface{}) {
+	fmt.Println(reflect.TypeOf(color).Kind())
+
 	// Create LEDs to set
 	everloop := make([]C.led, LedLength())
 	defer cLedSet(everloop)
+	defer fmt.Println("\n\n\n", everloop)
 
 	// Determine how to set LED colors
 	switch input := reflect.TypeOf(color); {
@@ -91,7 +105,8 @@ func LedSet(color interface{}) {
 		list := reflect.ValueOf(color)
 
 		for i := 0; i < list.Len(); i++ {
-			// everloop[i] = stringToCLed(color.(string))
+			everloop[i] = anythingToCLed(list.Index(i).Interface())
+			// fmt.Println(list.Index(i))
 		}
 
 	default:
