@@ -6,16 +6,16 @@ import (
 )
 
 import (
-	"fmt"
+	"errors"
 	"reflect"
 	"unsafe"
 
 	"golang.org/x/image/colornames"
 )
 
-/////////////////////////////////////
-// TODO: Adjust colors in colornames
-////////////////////////////////////
+////////////////////////////////////////
+// TODO: Adjust colors in colornames //
+//////////////////////////////////////
 
 // LedLength returns the number of LEDs on your MATRIX device
 func LedLength() int {
@@ -43,90 +43,60 @@ func (l Led) toCLed() C.led {
 	}
 }
 
-// stringToCled contains the following colors
-// https://godoc.org/golang.org/x/image/colornames#pkg-variables
-func stringToCLed(color string) C.led {
-	led := colornames.Map[color]
-
-	return C.led{
-		r: C.int(led.R),
-		g: C.int(led.G),
-		b: C.int(led.B),
-		w: C.int(0),
-	}
-}
-
-func anythingToCLed(color interface{}) C.led {
+// ToCLed can convert string or Led{}
+// may add more in the future
+func ToCLed(color interface{}) C.led {
 	// Determine how to set LED colors
 	switch input := reflect.TypeOf(color); {
 
-	//* Use string for all
+	//* string
 	case input.Kind() == reflect.String:
-		return stringToCLed(color.(string))
-		fmt.Println("you used string")
+		led := colornames.Map[color.(string)]
 
-	//* Use Led{} for all
+		return C.led{
+			r: C.int(led.R),
+			g: C.int(led.G),
+			b: C.int(led.B),
+			w: C.int(0),
+		}
+
+	//* Led{}
 	case input == reflect.TypeOf(Led{}):
 		return color.(Led).toCLed()
-		fmt.Println("you used struct Led")
 
+	//* Invalid input
 	default:
-		fmt.Print("UNEXPECTED INPUT: ")
-		fmt.Println(reflect.TypeOf(color).Kind())
+		return C.led{}
 	}
-
-	return C.led{}
 }
 
-// LedSet individually sets each MATRIX LED based on array index
-func LedSet(color interface{}) {
-	fmt.Println(reflect.TypeOf(color).Kind())
-
-	// Create LEDs to set
+// LedSet parses any string, Led{}, or list of the latter
+// to render the MATRIX everloop
+func LedSet(color interface{}) error {
 	everloop := make([]C.led, LedLength())
 	defer cLedSet(everloop)
-	defer fmt.Println("\n\n\n", everloop)
 
 	// Determine how to set LED colors
 	switch input := reflect.TypeOf(color); {
 
-	//* Use Led{} for all
-	case input == reflect.TypeOf(Led{}):
-		for i := 0; i < LedLength(); i++ {
-			everloop[i] = color.(Led).toCLed()
-		}
-	//* Use string for all
-	case input.Kind() == reflect.String:
-		for i := 0; i < LedLength(); i++ {
-			everloop[i] = stringToCLed(color.(string))
-		}
-	//* Use a slice/array of the previous inputs
+	//* Manually set each LED
 	case input.Kind() == reflect.Array || input.Kind() == reflect.Slice:
 		list := reflect.ValueOf(color)
 
 		for i := 0; i < list.Len(); i++ {
-			everloop[i] = anythingToCLed(list.Index(i).Interface())
-			// fmt.Println(list.Index(i))
+			everloop[i] = ToCLed(list.Index(i).Interface())
 		}
 
+	//* One color for all LEDs
+	case input == reflect.TypeOf(Led{}) || input.Kind() == reflect.String:
+		for i := 0; i < LedLength(); i++ {
+			everloop[i] = ToCLed(color)
+		}
+
+	//* Invalid input
 	default:
-		fmt.Print("UNEXPECTED INPUT: ")
-		fmt.Println(reflect.TypeOf(color).Kind())
+		return errors.New("LED configuration must be a string, Led{}, array, or slice")
 	}
+	
+	return nil
 }
-
-// LedSetAll sets all MATRIX LEDs to one value
-// func LedSetAll(led Led) {
-// 	everloop := []C.led{}
-
-// 	for i := 0; i < LedLength(); i++ {
-// 		everloop = append(everloop, C.led{
-// 			r: C.int(led.R),
-// 			g: C.int(led.G),
-// 			b: C.int(led.B),
-// 			w: C.int(led.W),
-// 		})
-// 	}
-
-// 	cLedSet(everloop)
-// }
