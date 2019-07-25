@@ -45,6 +45,7 @@ go get -u github.com/matrix-io/matrix-lite-go
 
 ## Everloop
 ```go
+package main
 import (
 	"fmt"
 	"time"
