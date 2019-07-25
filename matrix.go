@@ -5,6 +5,7 @@ package matrix
 #cgo LDFLAGS:  -lmatrix_creator_hal
 #include "bus.h"
 #include "everloop.h"
+#include "gpio.h"
 #include "sensors.h"
 */
 import (
@@ -23,6 +24,7 @@ func Init() {
 	}
 
 	C.everloop_init()
+	C.gpio_init()
 	C.uv_init()
 	C.imu_init()
 	C.humidity_init()

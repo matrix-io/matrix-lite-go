@@ -88,7 +88,7 @@ func main() {
 ```go
     package main
     import (
-        matrix "github.com/matrix-io/matrix-lite-go"
+        "github.com/matrix-io/matrix-lite-go"
         "fmt"
     )
     

@@ -1,7 +1,6 @@
 #include "matrix_hal/everloop.h"
 #include "matrix_hal/everloop_image.h"
 #include "bus.hpp"
-#include <stdio.h>
 extern "C"{
     #include "everloop.h"
 }
