@@ -38,7 +38,7 @@ go mod init myapp
 
 ## 4. Install matrix-lite-go
 ```
-go get github.com/matrix-io/matrix-lite-go
+go get -u github.com/matrix-io/matrix-lite-go
 ```
 
 # Usage (may change in the future)
