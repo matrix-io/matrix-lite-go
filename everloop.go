@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"reflect"
 	"unsafe"
+
+	"golang.org/x/image/colornames"
 )
 
 // LedLength returns the number of LEDs on your MATRIX device
@@ -16,13 +18,13 @@ func LedLength() int {
 	return int(C.everloopLength)
 }
 
-// Set everloop LEDs
+// cLedSet renders MATRIX everloop
 func cLedSet(leds []C.led) {
 	pointer := unsafe.Pointer(&leds[0])
 	C.everloop_set((*C.led)(pointer))
 }
 
-// Led represents the RGBW value of an LED (0-255)
+// Led represents the RGBW value of a MATRIX LED (0-255)
 type Led struct {
 	R, G, B, W uint8
 }
@@ -36,28 +38,39 @@ func (l Led) toCLed() C.led {
 	}
 }
 
-// TODO implement
-func stringToCLed(string) C.led {
-	return C.led{}
+// stringToCled contains the following colors
+// https://godoc.org/golang.org/x/image/colornames#pkg-variables
+func stringToCLed(color string) C.led {
+	led := colornames.Map[color]
+
+	return C.led{
+		r: C.int(led.R),
+		g: C.int(led.G),
+		b: C.int(led.B),
+		w: C.int(0),
+	}
 }
 
 // LedSet individually sets each MATRIX LED based on array index
 func LedSet(color interface{}) {
-	// Hold and then set LED values
+	// Create LEDs to set
 	everloop := make([]C.led, LedLength())
 	defer cLedSet(everloop)
 
 	// Determine how to set LEDs
 	switch input := reflect.TypeOf(color); {
 
-	// Assign Led{} colors to each LED
+	//* Use Led{} for all
 	case input == reflect.TypeOf(Led{}):
 		for i := 0; i < LedLength(); i++ {
 			everloop[i] = color.(Led).toCLed()
 		}
-
+	//* Use string for all
 	case input.Kind() == reflect.String:
-		fmt.Println("YOU GAVE A STRING")
+		for i := 0; i < LedLength(); i++ {
+			everloop[i] = stringToCLed(color.(string))
+		}
+
 	case input.Kind() == reflect.Array:
 		fmt.Println("YOU GAVE AN ARRAY")
 	case input.Kind() == reflect.Slice:
