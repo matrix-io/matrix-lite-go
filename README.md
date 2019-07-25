@@ -45,6 +45,7 @@ go get -u github.com/matrix-io/matrix-lite-go
 
 ## Everloop
 ```go
+package main
 import (
 	"fmt"
 	"time"
@@ -86,17 +87,17 @@ func main() {
 
 ## Sensors
 ```go
-    package main
-    import (
-        "github.com/matrix-io/matrix-lite-go"
-        "fmt"
-    )
-    
-    func main(){
-        matrix.Init()
-        fmt.Println( matrix.ReadImu() )
-        fmt.Println( matrix.ReadUv() )
-        fmt.Println( matrix.ReadHumidity() )
-        fmt.Println( matrix.ReadPressure() )
-    }
+package main
+import (
+	"github.com/matrix-io/matrix-lite-go"
+	"fmt"
+)
+
+func main(){
+	matrix.Init()
+	fmt.Println( matrix.ReadImu() )
+	fmt.Println( matrix.ReadUv() )
+	fmt.Println( matrix.ReadHumidity() )
+	fmt.Println( matrix.ReadPressure() )
+}
 ```
