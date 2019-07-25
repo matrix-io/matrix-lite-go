@@ -6,7 +6,7 @@ MATRIX Lite go is a Golang library that allows users of varying skill levels to 
 
 # Roadmap
 This roadmap is for achieving a basic implementation of the checklist below. **As this package develops, the API will improve and may change.**
-- [ ] Leds
+- [x] Leds
 - [x] Sensors
   - [x] IMU
   - [x] Humidity
@@ -42,6 +42,47 @@ go get github.com/matrix-io/matrix-lite-go
 ```
 
 # Usage (may change in the future)
+
+## Everloop
+```go
+import (
+	"fmt"
+	"time"
+
+	"github.com/matrix-io/matrix-lite-go"
+)
+
+func main() {
+	matrix.Init()
+
+	fmt.Println("This device has", matrix.LedLength(), "LEDs")
+
+	// A single string or object sets all LEDs
+	// Below are different ways of expressing a color (number values are from 0-255)
+	matrix.LedSet("blue")
+	matrix.LedSet(matrix.Led{0, 0, 10, 0})
+
+	// LEDs off
+	matrix.LedSet("black")
+	matrix.LedSet(matrix.Led{})
+
+	// Slices & Arrays can set individual LEDs
+	matrix.LedSet([]interface{}{"red", "gold", matrix.Led{}, "black", "purple", matrix.Led{G: 255}})
+
+	// Slices & Arrays can simulate motion
+	everloop := make([]matrix.Led, matrix.LedLength())
+	everloop[0] = matrix.Led{B: 100}
+
+	for {
+		lastLed := everloop[0]
+		everloop = everloop[1:]
+		everloop = append(everloop, lastLed)
+
+		matrix.LedSet(everloop)
+		time.Sleep(50 * time.Millisecond)
+	}
+}
+```
 
 ## Sensors
 ```go

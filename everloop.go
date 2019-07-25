@@ -97,6 +97,6 @@ func LedSet(color interface{}) error {
 	default:
 		return errors.New("LED configuration must be a string, Led{}, array, or slice")
 	}
-	
+
 	return nil
 }
