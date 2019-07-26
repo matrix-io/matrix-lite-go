@@ -69,9 +69,12 @@ func main() {
 	m.Led.Set(matrix.Rgbw{})
 
 	// Slices & Arrays can set individual LEDs
-	m.Led.Set([]interface{}{"red", "gold", matrix.Rgbw{}, "black", matrix.Rgbw{G: 255}})
+	m.Led.Set([]interface{}{"red", "", matrix.Rgbw{}, "black", matrix.Rgbw{G: 255}})// Slice with different data types
+	m.Led.Set([]string{"red", "gold", "black", "purple"}) // Slice of strings
+	m.Led.Set([5]string{"red", "gold", "black", "purple"}) // Array of strings
 
 	// Slices & Arrays can simulate motion
+	// It's recommended to use Slices so that m.Led.Lenght can be used
 	everloop := make([]matrix.Rgbw, m.Led.Length)
 	everloop[0] = matrix.Rgbw{B: 100}
 
