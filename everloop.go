@@ -14,8 +14,9 @@ import (
 )
 
 ///////////////////////////
-// EVERLOOP FUNCTIONS ////
+//  EVERLOOP FUNCTIONS  //
 /////////////////////////
+
 func everloopInit() Led {
 	C.everloop_init()
 	return Led{
@@ -67,7 +68,7 @@ func ToCLed(color interface{}) C.led {
 }
 
 ///////////////////////////
-// LED STRUCT & METHODS //
+//  STRUCTS & METHODS   //
 /////////////////////////
 
 // Led is used as the entrance point to communicate with
@@ -106,7 +107,7 @@ func (led *Led) Set(color interface{}) error {
 
 	//* Invalid input
 	default:
-		return errors.New("LED configuration must be a string, Led{}, array, or slice")
+		return errors.New("LED configuration must be a string, Rgbw{}, array, or slice")
 	}
 
 	return nil

@@ -12,7 +12,7 @@ This roadmap is for achieving a basic implementation of the checklist below. **A
   - [x] Humidity
   - [x] Pressure
   - [x] UV
-- [ ] GPIO
+- [x] GPIO
 - [ ] Microphones
   - [ ] Hal Mics
   - [ ] Alsa Mics
@@ -51,7 +51,7 @@ import (
 	"fmt"
 	"time"
 
-	matrix "github.com/matrix-io/matrix-lite-go"
+	"github.com/matrix-io/matrix-lite-go"
 )
 
 func main() {
@@ -106,5 +106,39 @@ func main() {
 	fmt.Println("UV: ", m.Uv)
 	fmt.Println("Humidity: ", m.Humidity)
 	fmt.Println("Pressure: ", m.Pressure)
+}
+```
+
+## GPIO
+```go
+
+package main
+
+import (
+	"github.com/matrix-io/matrix-lite-go"
+)
+
+func main() {
+	m := matrix.Init()
+
+	// Read GPIO pin 0 (digital)
+	m.Gpio.SetFunction(0, "DIGITAL")
+	m.Gpio.SetMode(0, "input")
+	fmt.Println(m.Gpio.GetDigital(0))
+
+	// Set GPIO pin 1 (digital)
+	m.Gpio.SetFunction(1, "DIGITAL")
+	m.Gpio.SetMode(1, "output")
+	m.Gpio.SetDigital(1, "ON")
+
+	// Set GPIO pin 2 (PWM)
+	m.Gpio.SetFunction(2, "PWM");
+	m.Gpio.SetMode(2, "output");
+	m.Gpio.SetPWM(2, 25, 50);
+
+	// Set Servo Angle pin 3
+	m.Gpio.SetFunction(3, "PWM");
+	m.Gpio.SetMode(3, "output");
+	m.Gpio.SetServoAngle(3, 90, 0.8);
 }
 ```

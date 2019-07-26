@@ -13,24 +13,24 @@ void gpio_init(){
 
 // - Set GPIO Pin state (digital)
 // Paramters: int pin (0-15), int mode (0=INPUT or 1=OUTPUT)
-bool setPinMode(int pin, int mode){
+bool setMode(int pin, int mode){
     return gpio_control.SetMode(pin, mode);
 }
 
 // - Set GPIO Pin function
 // Parameters: int pin (0-15), int function (0=DIGITAL or 1=PWM)
-bool setPinFunction(int pin, int function){
+bool setFunction(int pin, int function){
     return gpio_control.SetFunction(pin, function);
 }
 
 // - Read GPIO Pin state (digital only)
-int getPinValue(int pin){
+int getValue(int pin){
     return gpio_control.GetGPIOValue(pin);
 }
 
 // - Read all GPIO Pin states (digital only)
 // returned as a 16bit integer 
-int getPinValues(){
+int getValues(){
     return gpio_control.GetGPIOValues();
 }
 
