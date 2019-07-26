@@ -65,18 +65,18 @@ type Pressure struct {
 // Update Imu{} values
 func (s *Imu) Read() {
 	var values C.imu_values = C.imu_read()
-		s.AccelX = float32(values.accel_x)
-		s.AccelY = float32(values.accel_y)
-		s.AccelZ = float32(values.accel_z)
-		s.GyroX  = float32(values.gyro_x)
-		s.GyroY  = float32(values.gyro_y)
-		s.GyroZ  = float32(values.gyro_z)
-		s.Yaw    = float32(values.yaw)
-		s.Pitch  = float32(values.pitch)
-		s.Roll   = float32(values.roll)
-		s.MagX   = float32(values.mag_x)
-		s.MagY   = float32(values.mag_y)
-		s.MagZ   = float32(values.mag_z)
+	s.AccelX = float32(values.accel_x)
+	s.AccelY = float32(values.accel_y)
+	s.AccelZ = float32(values.accel_z)
+	s.GyroX = float32(values.gyro_x)
+	s.GyroY = float32(values.gyro_y)
+	s.GyroZ = float32(values.gyro_z)
+	s.Yaw = float32(values.yaw)
+	s.Pitch = float32(values.pitch)
+	s.Roll = float32(values.roll)
+	s.MagX = float32(values.mag_x)
+	s.MagY = float32(values.mag_y)
+	s.MagZ = float32(values.mag_z)
 }
 
 // Update Uv{} values
@@ -88,15 +88,15 @@ func (s *Uv) Read() {
 // Update Humidity{} values
 func (s *Humidity) Read() {
 	var values C.humidity_values = C.humidity_read()
-		s.Humidity    = float32(values.humidity)
-		s.Temperature = float32(values.temperature)
+	s.Humidity = float32(values.humidity)
+	s.Temperature = float32(values.temperature)
 }
 
 // Update Pressure{} values
 func (s *Pressure) Read() {
 	var values C.pressure_values = C.pressure_read()
-		s.Altitude    = float32(values.altitude)
-		s.Pressure    = float32(values.pressure)
-		s.Temperature = float32(values.temperature)
-	
+	s.Altitude = float32(values.altitude)
+	s.Pressure = float32(values.pressure)
+	s.Temperature = float32(values.temperature)
+
 }
