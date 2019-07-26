@@ -88,16 +88,21 @@ func main() {
 ## Sensors
 ```go
 package main
+
 import (
 	"github.com/matrix-io/matrix-lite-go"
-	"fmt"
 )
 
-func main(){
-	matrix.Init()
-	fmt.Println( matrix.ReadImu() )
-	fmt.Println( matrix.ReadUv() )
-	fmt.Println( matrix.ReadHumidity() )
-	fmt.Println( matrix.ReadPressure() )
-}
+func main() {
+	m := matrix.Init()
+	
+	m.Imu.Read()
+	m.Uv.Read()
+	m.Humidity.Read()
+	m.Pressure.Read()
+
+	fmt.Println("IMU: ", m.Imu)
+	fmt.Println("UV: ", m.Uv)
+	fmt.Println("Humidity: ", m.Humidity)
+	fmt.Println("Pressure: ", m.Pressure)
 ```

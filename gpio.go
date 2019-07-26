@@ -38,9 +38,9 @@ func (d Digital) pinFunction() {
 	var state int
 
 	if strings.ToLower(d.State) == "ON" {
-		state = 0
-	} else if strings.ToLower(d.State) == "OFF" {
 		state = 1
+	} else if strings.ToLower(d.State) == "OFF" {
+		state = 0
 	}
 
 	C.setPinFunction(C.int(d.Pin), C.int(0)) // 0=DIGITAL
