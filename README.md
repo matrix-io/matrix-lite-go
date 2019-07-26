@@ -46,41 +46,42 @@ go get -u github.com/matrix-io/matrix-lite-go
 ## Everloop
 ```go
 package main
+
 import (
 	"fmt"
 	"time"
 
-	"github.com/matrix-io/matrix-lite-go"
+	matrix "github.com/matrix-io/matrix-lite-go"
 )
 
 func main() {
-	matrix.Init()
+	m := matrix.Init()
 
-	fmt.Println("This device has", matrix.LedLength(), "LEDs")
+	fmt.Println("This device has", m.Led.Length, "LEDs")
 
 	// A single string or object sets all LEDs
 	// Below are different ways of expressing a color (number values are from 0-255)
-	matrix.LedSet("blue")
-	matrix.LedSet(matrix.Led{0, 0, 10, 0})
+	m.Led.Set("blue")
+	m.Led.Set(matrix.Rgbw{0, 0, 10, 0})
 
 	// LEDs off
-	matrix.LedSet("black")
-	matrix.LedSet(matrix.Led{})
+	m.Led.Set("black")
+	m.Led.Set(matrix.Rgbw{})
 
 	// Slices & Arrays can set individual LEDs
-	matrix.LedSet([]interface{}{"red", "gold", matrix.Led{}, "black", "purple", matrix.Led{G: 255}})
+	m.Led.Set([]interface{}{"red", "gold", matrix.Rgbw{}, "black", matrix.Rgbw{G: 255}})
 
 	// Slices & Arrays can simulate motion
-	everloop := make([]matrix.Led, matrix.LedLength())
-	everloop[0] = matrix.Led{B: 100}
+	everloop := make([]matrix.Rgbw, m.Led.Length)
+	everloop[0] = matrix.Rgbw{B: 100}
 
 	for {
 		lastLed := everloop[0]
 		everloop = everloop[1:]
 		everloop = append(everloop, lastLed)
 
-		matrix.LedSet(everloop)
-		time.Sleep(50 * time.Millisecond)
+		m.Led.Set(everloop)
+		time.Sleep(10 * time.Millisecond)
 	}
 }
 ```
@@ -95,7 +96,7 @@ import (
 
 func main() {
 	m := matrix.Init()
-	
+
 	m.Imu.Read()
 	m.Uv.Read()
 	m.Humidity.Read()
@@ -105,4 +106,5 @@ func main() {
 	fmt.Println("UV: ", m.Uv)
 	fmt.Println("Humidity: ", m.Humidity)
 	fmt.Println("Pressure: ", m.Pressure)
+}
 ```

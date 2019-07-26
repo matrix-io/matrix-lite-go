@@ -13,28 +13,25 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-////////////////////////////////////////
-// TODO: Adjust colors in colornames //
-//////////////////////////////////////
-
-// LedLength returns the number of LEDs on your MATRIX device
-func LedLength() int {
-	return int(C.everloopLength)
+///////////////////////////
+// EVERLOOP FUNCTIONS ////
+/////////////////////////
+func everloopInit() Led {
+	C.everloop_init()
+	return Led{
+		Length: int(C.everloopLength),
+	}
 }
 
-// cLedSet renders MATRIX everloop
+// cLedSet calls HAL to render the MATRIX Everloop.
 func cLedSet(leds []C.led) {
 	pointer := unsafe.Pointer(&leds[0])
 	C.everloop_set((*C.led)(pointer))
 }
 
-// Led represents the RGBW value of a MATRIX LED (0-255)
-type Led struct {
-	R, G, B, W uint8
-}
-
-// toCLed converts Led to a C readable LED
-func (l Led) toCLed() C.led {
+// toCLed converts Rgbw to a C readable LED.
+// This is normally passed into cLedSet as an array
+func (l Rgbw) toCLed() C.led {
 	return C.led{
 		r: C.int(l.R),
 		g: C.int(l.G),
@@ -43,8 +40,7 @@ func (l Led) toCLed() C.led {
 	}
 }
 
-// ToCLed can convert string or Led{}
-// may add more in the future
+// ToCLed converts any string or Rgbw{} into a C.led
 func ToCLed(color interface{}) C.led {
 	// Determine how to set LED colors
 	switch input := reflect.TypeOf(color); {
@@ -60,9 +56,9 @@ func ToCLed(color interface{}) C.led {
 			w: C.int(0),
 		}
 
-	//* Led{}
-	case input == reflect.TypeOf(Led{}):
-		return color.(Led).toCLed()
+	//* Rgbw{}
+	case input == reflect.TypeOf(Rgbw{}):
+		return color.(Rgbw).toCLed()
 
 	//* Invalid input
 	default:
@@ -70,10 +66,25 @@ func ToCLed(color interface{}) C.led {
 	}
 }
 
-// LedSet parses any string, Led{}, or list of the latter
+///////////////////////////
+// LED STRUCT & METHODS //
+/////////////////////////
+
+// Led is used as the entrance point to communicate with
+// the MATRIX everloop (That big ring of LEDs).
+type Led struct {
+	Length int
+}
+
+// Rgbw represents the colors of a MATRIX LED (0-255)
+type Rgbw struct {
+	R, G, B, W uint8
+}
+
+// Set parses any string, Rgbw{}, or list of the latter
 // to render the MATRIX everloop
-func LedSet(color interface{}) error {
-	everloop := make([]C.led, LedLength())
+func (led *Led) Set(color interface{}) error {
+	everloop := make([]C.led, led.Length)
 	defer cLedSet(everloop)
 
 	// Determine how to set LED colors
@@ -88,8 +99,8 @@ func LedSet(color interface{}) error {
 		}
 
 	//* One color for all LEDs
-	case input == reflect.TypeOf(Led{}) || input.Kind() == reflect.String:
-		for i := 0; i < LedLength(); i++ {
+	case input == reflect.TypeOf(Rgbw{}) || input.Kind() == reflect.String:
+		for i := 0; i < led.Length; i++ {
 			everloop[i] = ToCLed(color)
 		}
 

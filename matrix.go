@@ -18,6 +18,7 @@ import (
 
 // Matrix is the main object that allows communication with MATRIX HAL
 type Matrix struct {
+	Led
 	Imu
 	Uv
 	Pressure
@@ -31,10 +32,10 @@ func Init() Matrix {
 		log.Fatal("matrixio_bus not initialized!\nIs MATRIX HAL installed?")
 	}
 
-	C.everloop_init()
 	C.gpio_init()
 
 	return Matrix{
+		Led:      everloopInit(),
 		Imu:      imuInit(),
 		Uv:       uvInit(),
 		Humidity: humidityInit(),
