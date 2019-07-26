@@ -81,7 +81,7 @@ func main() {
 		everloop = append(everloop, lastLed)
 
 		m.Led.Set(everloop)
-		time.Sleep(10 * time.Millisecond)
+		time.Sleep(50 * time.Millisecond)
 	}
 }
 ```

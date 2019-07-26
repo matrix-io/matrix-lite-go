@@ -41,8 +41,8 @@ func (l Rgbw) toCLed() C.led {
 	}
 }
 
-// ToCLed converts any string or Rgbw{} into a C.led
-func ToCLed(color interface{}) C.led {
+// toCLed converts any string or Rgbw{} into a C.led
+func toCLed(color interface{}) C.led {
 	// Determine how to set LED colors
 	switch input := reflect.TypeOf(color); {
 
@@ -96,13 +96,13 @@ func (led *Led) Set(color interface{}) error {
 		list := reflect.ValueOf(color)
 
 		for i := 0; i < list.Len(); i++ {
-			everloop[i] = ToCLed(list.Index(i).Interface())
+			everloop[i] = toCLed(list.Index(i).Interface())
 		}
 
 	//* One color for all LEDs
 	case input == reflect.TypeOf(Rgbw{}) || input.Kind() == reflect.String:
 		for i := 0; i < led.Length; i++ {
-			everloop[i] = ToCLed(color)
+			everloop[i] = toCLed(color)
 		}
 
 	//* Invalid input
