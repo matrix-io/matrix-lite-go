@@ -74,7 +74,7 @@ func main() {
 	m.Led.Set([5]string{"red", "gold", "black", "purple"}) // Array of strings
 
 	// Slices & Arrays can simulate motion
-	// It's recommended to use Slices so that m.Led.Lenght can be used
+	// It's recommended to use Slices so that m.Led.Length can be used
 	everloop := make([]matrix.Rgbw, m.Led.Length)
 	everloop[0] = matrix.Rgbw{B: 100}
 
