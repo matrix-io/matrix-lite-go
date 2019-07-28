@@ -62,21 +62,21 @@ func main() {
 	// A single string or object sets all LEDs
 	// Below are different ways of expressing a color (number values are from 0-255)
 	m.Led.Set("blue")
-	m.Led.Set(matrix.Rgbw{0, 0, 10, 0})
+	m.Led.Set(matrix.RGBW{0, 0, 10, 0})
 
 	// LEDs off
 	m.Led.Set("black")
-	m.Led.Set(matrix.Rgbw{})
+	m.Led.Set(matrix.RGBW{})
 
 	// Slices & Arrays can set individual LEDs
-	m.Led.Set([]interface{}{"red", "", matrix.Rgbw{}, "black", matrix.Rgbw{G: 255}})// Slice with different data types
+	m.Led.Set([]interface{}{"red", "", matrix.RGBW{}, "black", matrix.RGBW{G: 255}})// Slice with different data types
 	m.Led.Set([]string{"red", "gold", "black", "purple"}) // Slice of strings
 	m.Led.Set([5]string{"red", "gold", "black", "purple"}) // Array of strings
 
 	// Slices & Arrays can simulate motion
 	// It's recommended to use Slices so that m.Led.Length can be used
-	everloop := make([]matrix.Rgbw, m.Led.Length)
-	everloop[0] = matrix.Rgbw{B: 100}
+	everloop := make([]matrix.RGBW, m.Led.Length)
+	everloop[0] = matrix.RGBW{B: 100}
 
 	for {
 		lastLed := everloop[0]

@@ -30,9 +30,9 @@ func cLedSet(leds []C.led) {
 	C.everloop_set((*C.led)(pointer))
 }
 
-// toCLed converts Rgbw to a C readable LED.
+// toCLed converts RGBW to a C readable LED.
 // This is normally passed into cLedSet as an array
-func (l Rgbw) toCLed() C.led {
+func (l RGBW) toCLed() C.led {
 	return C.led{
 		r: C.int(l.R),
 		g: C.int(l.G),
@@ -41,7 +41,7 @@ func (l Rgbw) toCLed() C.led {
 	}
 }
 
-// toCLed converts any string or Rgbw{} into a C.led
+// toCLed converts any string or RGBW{} into a C.led
 func toCLed(color interface{}) C.led {
 	// Determine how to set LED colors
 	switch input := reflect.TypeOf(color); {
@@ -57,9 +57,9 @@ func toCLed(color interface{}) C.led {
 			w: C.int(0),
 		}
 
-	//* Rgbw{}
-	case input == reflect.TypeOf(Rgbw{}):
-		return color.(Rgbw).toCLed()
+	//* RGBW{}
+	case input == reflect.TypeOf(RGBW{}):
+		return color.(RGBW).toCLed()
 
 	//* Invalid input
 	default:
@@ -77,12 +77,12 @@ type Led struct {
 	Length int
 }
 
-// Rgbw represents the colors of a MATRIX LED (0-255)
-type Rgbw struct {
+// RGBW represents the colors of a MATRIX LED (0-255)
+type RGBW struct {
 	R, G, B, W uint8
 }
 
-// Set parses any string, Rgbw{}, or list of the latter
+// Set parses any string, RGBW{}, or list of the latter
 // to render the MATRIX everloop
 func (led *Led) Set(color interface{}) error {
 	everloop := make([]C.led, led.Length)
@@ -100,14 +100,14 @@ func (led *Led) Set(color interface{}) error {
 		}
 
 	//* One color for all LEDs
-	case input == reflect.TypeOf(Rgbw{}) || input.Kind() == reflect.String:
+	case input == reflect.TypeOf(RGBW{}) || input.Kind() == reflect.String:
 		for i := 0; i < led.Length; i++ {
 			everloop[i] = toCLed(color)
 		}
 
 	//* Invalid input
 	default:
-		return errors.New("LED configuration must be a string, Rgbw{}, array, or slice")
+		return errors.New("LED configuration must be a string, RGBW{}, array, or slice")
 	}
 
 	return nil
