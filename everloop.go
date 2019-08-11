@@ -31,7 +31,7 @@ func cLedSet(leds []C.led) {
 }
 
 // toCLed converts RGBW to a C readable LED.
-// This is normally passed into cLedSet as an array
+// Normally passed into cLedSet in an array
 func (l RGBW) toCLed() C.led {
 	return C.led{
 		r: C.int(l.R),
@@ -82,7 +82,7 @@ type RGBW struct {
 	R, G, B, W uint8
 }
 
-// Set parses any string, RGBW{}, or list of the latter
+// Set parses any string, RGBW{}, or list of the previous types
 // to render the MATRIX everloop
 func (led *Led) Set(color interface{}) error {
 	everloop := make([]C.led, led.Length)
