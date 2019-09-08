@@ -40,7 +40,7 @@ go mod init myapp
 go get -u github.com/matrix-io/matrix-lite-go
 ```
 
-# Usage (may change in the future)
+# Usage
 
 ## Everloop
 ```go
