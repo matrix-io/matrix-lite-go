@@ -93,6 +93,8 @@ func main() {
 package main
 
 import (
+	"fmt"	
+
 	"github.com/matrix-io/matrix-lite-go"
 )
 
@@ -117,6 +119,8 @@ func main() {
 package main
 
 import (
+	"fmt"
+	
 	"github.com/matrix-io/matrix-lite-go"
 )
 
