@@ -68,7 +68,7 @@ func main() {
 	m.Led.Set(matrix.RGBW{})
 
 	// Slices & Arrays can set individual LEDs
-	m.Led.Set([]interface{}{"red", "", matrix.RGBW{}, "black", matrix.RGBW{G: 255}})// Slice with different data types
+	m.Led.Set([]interface{}{"red", "", matrix.RGBW{}, "black", matrix.RGBW{G: 255}}) // Slice with different data types
 	m.Led.Set([]string{"red", "gold", "black", "purple"}) // Slice of strings
 	m.Led.Set([5]string{"red", "gold", "black", "purple"}) // Array of strings
 
